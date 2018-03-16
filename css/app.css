@@ -32,3 +32,8 @@ body {
 	justify-content: center;
 	align-items: center;
 }
+
+.fas {
+	font-size: 5rem;
+	color: #fff;
+}
