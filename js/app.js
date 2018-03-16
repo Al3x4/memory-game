@@ -1,4 +1,4 @@
-let icons = ['trophy', 'tree', 'tint', 'umbrella', 'warehouse', 'podcast', 'pills', 'plane', 'paw', 'rocket', 'puzzle-piece', 'paperclip', 'paper-plane', 'motorcycle', 'lock', 'lemon', 'leaf'];
+let icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook ', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
 
 
 function startGame() {
@@ -39,7 +39,7 @@ function populate(num) {
 	for (let x = 0; x < num; x++) {
     	const card = document.createElement('div');
     	const icon = document.createElement('i')
-    	icon.classList.add('card', 'fa', 'fa-'+boardIcons[x]);
+    	icon.classList.add('card', 'fas', 'fa-'+boardIcons[x]);
 		card.appendChild(icon);
 		fragment.appendChild(card);
 		console.log("it works");
