@@ -47,7 +47,7 @@ function populate(num) {
 }
 
 board.addEventListener('click', e => {
-	setInterval(timer, 1000);
+	
 	if (e.target.classList.contains('fas') && !e.target.classList.contains('open')) {
 		clickCount += 1;
 		console.log(clickCount);
@@ -78,7 +78,7 @@ board.addEventListener('click', e => {
 
 });
 
-
+setInterval(timer, 1000);
 function timer(){
 	const timer = document.getElementById('timer');
 	sec+=1;
