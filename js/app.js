@@ -81,10 +81,8 @@ board.addEventListener('click', e => {
 					}, 1200);
 					
 			}
-		}
-				
+		}				
 	}
-
 });
 
 setInterval(timer, 1000);
@@ -101,5 +99,11 @@ function timer(){
 }
 
 reset.addEventListener('click', startGame);
+
+
+document.addEventListener('click', function(e){
+	console.log(e.target);
+})
+
 
 startGame();
