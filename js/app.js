@@ -3,11 +3,14 @@ const board = document.querySelector('.game-board');
 let clickCount = 0;
 let clickedCards = [];
 let sec = 0;
+let reset = document.getElementById('reset');
 
 function startGame() {
 	//timerReset();
 	//starReset();
 	populate(4);
+	sec = 0;
+	clickedCards = [];
 }
 
 
@@ -23,7 +26,10 @@ function shuffle(array) {
 }
 
 function populate(num) {
-	
+
+	//clear the board
+	board.innerHTML = "";
+
 	//LOGIC IS: shuffle the main array and slice half the number of cards
 	shuffle(icons);
 	let boardIcons = icons.slice(0, num/2);
@@ -54,26 +60,29 @@ board.addEventListener('click', e => {
 		clickedCards.push(e.target.classList[2]);
 		console.log(clickedCards);
 		e.target.classList.add('open');
-		setTimeout ( function(){
-			if (clickCount === 2) {
-				clickCount = 0;
-				let selectedCards = document.querySelectorAll('.open');
-				if (clickedCards[0]===clickedCards[1]) {
+		if (clickCount === 2) {
+			clickCount = 0;
+			let selectedCards = document.querySelectorAll('.open');
+			if (clickedCards[0]===clickedCards[1]) {
 					console.log('match');
 					clickedCards = [];
 					[].forEach.call(selectedCards, c =>{
 						c.classList.add('correct');
 					});
 
-				} else {
+			} else {
 					console.log('no match');
-					clickedCards = [];
-					[].forEach.call(selectedCards, c =>{
+					//set timeout here so they can see the cards before they flip
+					setTimeout(function(){
+						clickedCards = [];
+						[].forEach.call(selectedCards, c =>{
 						c.classList.remove('open');
-					});
-				}
+						});
+					}, 1200);
+					
 			}
-		}, 1500);		
+		}
+				
 	}
 
 });
@@ -90,5 +99,7 @@ function timer(){
 		timer.innerText = minutes+":"+seconds;
 	}
 }
+
+reset.addEventListener('click', startGame);
 
 startGame();
