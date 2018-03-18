@@ -24,15 +24,30 @@ body {
 }
 
 .card {
-	width: 200px;
-	height: 200px;
-	margin: 100px;
 	background-color: red;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 20px;
 	font-size: 0rem;
+}
+
+.easy {
+	width: 200px;
+	height: 200px;
+	margin: 100px;
+}
+
+.normal {
+	width: 150px;
+	height: 150px;
+	margin: 25px;
+}
+
+.hard {
+	width: 108px;
+	height: 108px;
+	margin: 12px;
 }
 
 .fas {
@@ -46,4 +61,6 @@ body {
 
 .correct {
 	background-color: green;
+	font-size: 4rem; 
+	
 }

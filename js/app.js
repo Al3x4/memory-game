@@ -8,7 +8,7 @@ let reset = document.getElementById('reset');
 function startGame() {
 	//timerReset();
 	//starReset();
-	populate(4);
+	populate(36);
 	sec = 0;
 	clickedCards = [];
 }
@@ -45,6 +45,7 @@ function populate(num) {
     	const card = document.createElement('div');
     	const icon = document.createElement('i')
     	icon.classList.add('card', 'fas', 'fa-' + boardIcons[x]);
+    	icon.classList.add('hard');
 		card.appendChild(icon);
 		fragment.appendChild(card);
 		console.log('it works');
@@ -99,11 +100,6 @@ function timer(){
 }
 
 reset.addEventListener('click', startGame);
-
-
-document.addEventListener('click', function(e){
-	console.log(e.target);
-})
 
 
 startGame();
