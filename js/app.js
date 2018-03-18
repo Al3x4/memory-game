@@ -2,6 +2,7 @@ const icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath'
 const board = document.querySelector('.game-board');
 let clickCount = 0;
 let clickedCards = [];
+let sec = 0;
 
 function startGame() {
 	//timerReset();
@@ -46,6 +47,7 @@ function populate(num) {
 }
 
 board.addEventListener('click', e => {
+	setInterval(timer, 1000);
 	if (e.target.classList.contains('fas') && !e.target.classList.contains('open')) {
 		clickCount += 1;
 		console.log(clickCount);
@@ -71,14 +73,22 @@ board.addEventListener('click', e => {
 					});
 				}
 			}
-		}, 2000);		
+		}, 1500);		
 	}
 
 });
 
 
 function timer(){
-	
+	const timer = document.getElementById('timer');
+	sec+=1;
+	if (sec<60) {
+		timer.innerText = sec;
+	} else if (sec<3600) {
+		let minutes = Math.floor(sec/60);
+		let seconds = sec % 60;
+		timer.innerText = minutes+":"+seconds;
+	}
 }
 
 startGame();
