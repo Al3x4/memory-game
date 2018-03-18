@@ -54,31 +54,31 @@ board.addEventListener('click', e => {
 		e.target.classList.add('open');
 		setTimeout ( function(){
 			if (clickCount === 2) {
-			clickCount = 0;
-			if (clickedCards[0]===clickedCards[1]) {
-				console.log('match');
-				clickedCards = [];
-			} else {
-				console.log('no match');
-				clickedCards = [];
-				let closeThese = document.querySelectorAll('.open');
-				[].forEach.call(closeThese, c =>{
-					c.classList.remove('open');
-				});
+				clickCount = 0;
+				let selectedCards = document.querySelectorAll('.open');
+				if (clickedCards[0]===clickedCards[1]) {
+					console.log('match');
+					clickedCards = [];
+					[].forEach.call(selectedCards, c =>{
+						c.classList.add('correct');
+					});
+
+				} else {
+					console.log('no match');
+					clickedCards = [];
+					[].forEach.call(selectedCards, c =>{
+						c.classList.remove('open');
+					});
+				}
 			}
-
-		}
-
-		}, 2000);
-		
-
+		}, 2000);		
 	}
+
+});
+
+
+function timer(){
 	
-	
-
-})
-
-
-
+}
 
 startGame();

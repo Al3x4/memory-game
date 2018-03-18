@@ -43,3 +43,7 @@ body {
 	background-color: blue;
 	font-size: 4rem; 
 }
+
+.correct {
+	background-color: green;
+}
