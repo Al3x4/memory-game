@@ -46,13 +46,14 @@ function populate(num) {
 }
 
 board.addEventListener('click', e => {
-	if (e.target.classList.contains('fas')) {
+	if (e.target.classList.contains('fas') && !e.target.classList.contains('open')) {
 		clickCount += 1;
 		console.log(clickCount);
 		clickedCards.push(e.target.classList[2]);
 		console.log(clickedCards);
 		e.target.classList.add('open');
-		if (clickCount === 2) {
+		setTimeout ( function(){
+			if (clickCount === 2) {
 			clickCount = 0;
 			if (clickedCards[0]===clickedCards[1]) {
 				console.log('match');
@@ -64,9 +65,12 @@ board.addEventListener('click', e => {
 				[].forEach.call(closeThese, c =>{
 					c.classList.remove('open');
 				});
-			} 
+			}
 
 		}
+
+		}, 2000);
+		
 
 	}
 	
