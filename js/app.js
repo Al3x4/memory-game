@@ -1,17 +1,16 @@
-let icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
-
+const icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
+const board = document.querySelector('.game-board');
+let clickCount = 0;
+let clickedCards = [];
 
 function startGame() {
 	//timerReset();
 	//starReset();
 	populate(4);
-	
-
 }
 
 
 //shuffle function from https://bost.ocks.org/mike/shuffle/
-
 function shuffle(array) {
   var m = array.length, t, i;
   while (m) {
@@ -33,7 +32,6 @@ function populate(num) {
 	shuffle(boardIcons);
 	
 	//populate HTML
-	let board = document.querySelector('.game-board');
 	const fragment = document.createDocumentFragment(); 
 
 	for (let x = 0; x < num; x++) {
@@ -42,10 +40,41 @@ function populate(num) {
     	icon.classList.add('card', 'fas', 'fa-' + boardIcons[x]);
 		card.appendChild(icon);
 		fragment.appendChild(card);
-		console.log("it works");
+		console.log('it works');
 	}
 	board.appendChild(fragment); 
 }
 
+board.addEventListener('click', e => {
+	if (e.target.classList.contains('fas')) {
+		clickCount += 1;
+		console.log(clickCount);
+		clickedCards.push(e.target.classList[2]);
+		console.log(clickedCards);
+		e.target.classList.add('open');
+		if (clickCount === 2) {
+			clickCount = 0;
+			if (clickedCards[0]===clickedCards[1]) {
+				console.log('match');
+				clickedCards = [];
+			} else {
+				console.log('no match');
+				clickedCards = [];
+				let closeThese = document.querySelectorAll('.open');
+				[].forEach.call(closeThese, c =>{
+					c.classList.remove('open');
+				});
+			} 
 
-	startGame();
+		}
+
+	}
+	
+	
+
+})
+
+
+
+
+startGame();
