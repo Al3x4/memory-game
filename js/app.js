@@ -1,14 +1,20 @@
 const icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
 const board = document.querySelector('.game-board');
+const reset = document.getElementById('reset');
+const difficulties = document.querySelectorAll("input[name='difficulty']");
 let clickCount = 0;
 let clickedCards = [];
 let sec = 0;
-let reset = document.getElementById('reset');
+let difficulty;
 
 function startGame() {
+	
+	checkDifficulty();
+	
+	//start game in normal mode
+	populate(difficulty);
+
 	//timerReset();
-	//starReset();
-	populate(36);
 	sec = 0;
 	clickedCards = [];
 }
@@ -100,6 +106,34 @@ function timer(){
 }
 
 reset.addEventListener('click', startGame);
+
+
+//check difficulty radio
+
+
+
+
+function checkDifficulty(){
+	[].forEach.call(difficulties, function(val){
+		
+		if (val.value === "easy" && val.checked === true) {
+			difficulty = 4;
+			console.log(difficulty);
+		} else if (val.value === "normal" && val.checked === true) {
+			difficulty = 16;
+			console.log(difficulty);
+		} else if (val.value === "hard" && val.checked === true) {
+			difficulty = 36;
+			console.log(difficulty);
+		}
+	});
+
+}
+
+document.getElementById('form').addEventListener('change', function(){
+	checkDifficulty();
+	populate(difficulty);
+});
 
 
 startGame();
