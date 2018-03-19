@@ -18,36 +18,59 @@ body {
 }
 
 .game-board {
+	background-color: #bababa;
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	background-color: #bababa;
+	justify-content: space-around;
+	padding: 1%;
 }
+
+
+.icon {
+	visibility: hidden;
+	font-size: 4em;
+}
+
+.icon_open, 
+.icon_correct {
+	visibility: visible;
+}
+
+
 
 .card {
 	background-color: red;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-radius: 20px;
-	font-size: 0rem;
+	border-radius: 5%;
+	margin: 1%;
 }
 
 .easy {
-	width: 200px;
-	height: 200px;
-	margin: 100px;
+
+    max-width: 400px;
+    height: 0px;
+    width:46%;
+    padding-top:23%;
+    padding-bottom:23%;
 }
 
 .normal {
-	width: 150px;
-	height: 150px;
-	margin: 25px;
+    max-width: 190px;
+    height: 0px;
+    width:22%;
+    padding-top:11%;
+    padding-bottom:11%;
 }
 
 .hard {
-	width: 108px;
-	height: 108px;
-	margin: 12px;
+	max-width: 125px;
+	height: 0px;
+	width: 14%;
+	padding-top: 7%;
+    padding-bottom: 7%;
 }
 
 .fas {
@@ -55,12 +78,12 @@ body {
 }
 
 .open {
-	background-color: blue;
-	font-size: 4rem; 
+	background-color: blue;	
 }
 
 .correct {
 	background-color: green;
-	font-size: 4rem; 
 	
 }
+
+span.clear { clear: left; display: block; }

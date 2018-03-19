@@ -49,6 +49,8 @@ function populate(num) {
 
 	//clear the board
 	board.innerHTML = "";
+	//board.classList = ""
+	//board.classList.add(difficultyClass);
 
 	//LOGIC IS: shuffle the main array and slice half the number of cards
 	//this is to always get a random selection of icons
@@ -63,15 +65,17 @@ function populate(num) {
 	const fragment = document.createDocumentFragment(); 
 
 	for (let x = 0; x < num; x++) {
-    	const card = document.createElement('div');
-    	const icon = document.createElement('i')
-    	icon.classList.add('card', 'fas', 'fa-' + boardIcons[x]);
-    	icon.classList.add(difficultyClass);
-		
+		const card = document.createElement('div');
+    	const icon = document.createElement('i');
+    	icon.classList.add('icon','fas', 'fa-' + boardIcons[x]);
+    	card.classList.add('card', difficultyClass);
+    	
 		card.appendChild(icon);
 		fragment.appendChild(card);
+
 	}
 	board.appendChild(fragment); 
+
 }
 
 //timer functionality
@@ -95,14 +99,26 @@ function startGame() {
 }
 
 function matchChecker(e){
-	//LOGIC IS: make sure the click target is a card, it is not currently open for checking and it is not permanenetly checked as correct 
-	if (e.target.classList.contains('fas') && !e.target.classList.contains('open') && !e.target.classList.contains('correct')){
-		clickCount += 1;
+	//LOGIC IS: make sure the click target is a card
 
+	if (e.target.firstChild.classList.contains('fas') 
+		//but not an icon inside an open card
+		&& !e.target.firstChild.classList.contains('icon_open')
+		// but not an icon inside a card that is marked as correct 
+		&& !e.target.firstChild.classList.contains('icon_correct') 
+		//but not a card that is already open
+		&& !e.target.classList.contains('open')
+		//but not a card that is already marked as correct
+		&& !e.target.classList.contains('correct')){
+		console.log(e.target);
+		clickCount += 1;
+		
 		// make an array of the clicked cards' font Awesome classes		
-		clickedCards.push(e.target.classList[2]);
+		clickedCards.push(e.target.firstChild.classList[2]);
 
 		e.target.classList.add('open');
+		e.target.firstChild.classList.add('icon_open');
+
 
 		if (clickCount === 2) {
 			clickCount = 0;
@@ -113,6 +129,7 @@ function matchChecker(e){
 				//if it's a match, add the class 'correct' to keep the cards open
 				[].forEach.call(selectedCards, c =>{
 					c.classList.add('correct');
+					c.firstChild.classList.add('correct');
 				});
 
 			} else {
@@ -122,6 +139,8 @@ function matchChecker(e){
 					clickedCards = [];
 					[].forEach.call(selectedCards, c =>{
 					c.classList.remove('open');
+					c.firstChild.classList.remove('icon_open');
+
 					});
 				}, 1200);
 					
