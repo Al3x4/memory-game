@@ -6,6 +6,7 @@ let clickCount = 0;
 let clickedCards = [];
 let sec = 0;
 let difficulty;
+let difficultyClass;
 
 function startGame() {
 	
@@ -51,7 +52,7 @@ function populate(num) {
     	const card = document.createElement('div');
     	const icon = document.createElement('i')
     	icon.classList.add('card', 'fas', 'fa-' + boardIcons[x]);
-    	icon.classList.add('hard');
+    	icon.classList.add(difficultyClass);
 		card.appendChild(icon);
 		fragment.appendChild(card);
 		console.log('it works');
@@ -118,13 +119,15 @@ function checkDifficulty(){
 		
 		if (val.value === "easy" && val.checked === true) {
 			difficulty = 4;
-			console.log(difficulty);
+			difficultyClass = 'easy';
 		} else if (val.value === "normal" && val.checked === true) {
 			difficulty = 16;
 			console.log(difficulty);
+			difficultyClass = 'normal';
 		} else if (val.value === "hard" && val.checked === true) {
 			difficulty = 36;
 			console.log(difficulty);
+			difficultyClass = 'hard';
 		}
 	});
 
