@@ -9,6 +9,7 @@ let sec;
 let difficulty;
 let difficultyClass;
 
+const cardContainers = document.querySelectorAll(".card-container");
 
 //shuffle function from https://bost.ocks.org/mike/shuffle/
 function shuffle(array) {
@@ -49,8 +50,6 @@ function populate(num) {
 
 	//clear the board
 	board.innerHTML = "";
-	//board.classList = ""
-	//board.classList.add(difficultyClass);
 
 	//LOGIC IS: shuffle the main array and slice half the number of cards
 	//this is to always get a random selection of icons
@@ -65,14 +64,18 @@ function populate(num) {
 	const fragment = document.createDocumentFragment(); 
 
 	for (let x = 0; x < num; x++) {
-		const card = document.createElement('div');
+		const cardContainer = document.createElement('div');
+		cardContainer.classList.add('card-container', difficultyClass);
+    	const front = document.createElement('div');
+    	const back = document.createElement('div');
+    	front.classList.add('card', 'front');
+    	back.classList.add('card', 'back');
     	const icon = document.createElement('i');
     	icon.classList.add('icon','fas', 'fa-' + boardIcons[x]);
-    	card.classList.add('card', difficultyClass);
-    	
-		card.appendChild(icon);
-		fragment.appendChild(card);
-
+    	back.appendChild(icon);
+    	cardContainer.appendChild(front);
+    	cardContainer.appendChild(back);
+		fragment.appendChild(cardContainer);
 	}
 	board.appendChild(fragment); 
 
@@ -98,54 +101,62 @@ function startGame() {
 	sec = 0;  //timer reset
 }
 
-function matchChecker(e){
-	//LOGIC IS: make sure the click target is a card
-	if (e.target.firstChild.classList.contains('fas') 
-		//but not an open card
-		&& !e.target.firstChild.classList.contains('icon_open')
-		// but not a card that is marked as correct 
-		&& !e.target.firstChild.classList.contains('icon_correct') ){ 
-		console.log(e.target);
-		clickCount += 1;
+[].forEach.call(cardContainers, function(){
+	this.addEventListener('click', function(e){
+	console.log(this.firstElementChild);
+	e.target.classList.add('front-open');
+	e.target.nextElementSibling.classList.add('back-open');
+	});
+});
+
+// function matchChecker(e){
+// 	//LOGIC IS: make sure the click target is a card
+// 	if (e.target.firstChild.classList.contains('fas') 
+// 		//but not an open card
+// 		&& !e.target.firstChild.classList.contains('icon_open')
+// 		// but not a card that is marked as correct 
+// 		&& !e.target.firstChild.classList.contains('icon_correct') ){ 
+// 		console.log(e.target);
+// 		clickCount += 1;
 		
-		// make an array of the clicked cards' font Awesome classes		
-		clickedCards.push(e.target.firstChild.classList[2]);
+// 		// make an array of the clicked cards' font Awesome classes		
+// 		clickedCards.push(e.target.firstChild.classList[2]);
 
-		e.target.classList.add('open');
-		e.target.firstChild.classList.add('icon_open');
+// 		e.target.classList.add('open');
+// 		e.target.firstChild.classList.add('icon_open');
 
 
-		if (clickCount === 2) {
-			clickCount = 0;
-			let selectedCards = document.querySelectorAll('.open');
-			//check if the clicked cards' font Awesome classes match
-			if (clickedCards[0]===clickedCards[1]) {
-				clickedCards = [];
-				//if it's a match, add the class 'correct' to keep the cards open
-				[].forEach.call(selectedCards, c =>{
-					c.classList.add('correct');
-					c.firstChild.classList.add('icon_correct');
-				});
+// 		if (clickCount === 2) {
+// 			clickCount = 0;
+// 			let selectedCards = document.querySelectorAll('.open');
+// 			//check if the clicked cards' font Awesome classes match
+// 			if (clickedCards[0]===clickedCards[1]) {
+// 				clickedCards = [];
+// 				//if it's a match, add the class 'correct' to keep the cards open
+// 				[].forEach.call(selectedCards, c =>{
+// 					c.classList.add('correct');
+// 					c.firstChild.classList.add('icon_correct');
+// 				});
 
-			} else {
-				//if it's not a match, remove the class 'open' so the cards close again
-				//set timeout here so the player can see the cards before they flip(must refactor this 'cause weird errors)
-				setTimeout(function(){
-					clickedCards = [];
-					[].forEach.call(selectedCards, c =>{
-					c.classList.remove('open');
-					c.firstChild.classList.remove('icon_open');
+// 			} else {
+// 				//if it's not a match, remove the class 'open' so the cards close again
+// 				//set timeout here so the player can see the cards before they flip(must refactor this 'cause weird errors)
+// 				setTimeout(function(){
+// 					clickedCards = [];
+// 					[].forEach.call(selectedCards, c =>{
+// 					c.classList.remove('open');
+// 					c.firstChild.classList.remove('icon_open');
 
-					});
-				}, 1000);
+// 					});
+// 				}, 1000);
 					
-			}
-		}				
-	}
-}
+// 			}
+// 		}				
+// 	}
+// }
 
 reset.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
-board.addEventListener('click', matchChecker);
+//board.addEventListener('click', matchChecker);
 
 startGame();

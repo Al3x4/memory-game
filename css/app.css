@@ -26,74 +26,56 @@ body {
 	padding: 1%;
 }
 
-
-.icon {
-	visibility: hidden;
-	font-size: inherit;
+.card-container {
+	perspective: 1000px;
+	position: relative;
+	margin:10%;	
 }
-
-.icon_open, 
-.icon_correct {
-	visibility: visible;
-}
-
-
 
 .card {
-	background-color: red;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 5%;
-	margin: 1%;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: blue;
+	backface-visibility: hidden;
+	transition: .5s;
 }
 
-.card:hover {
-	-webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-	box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-	cursor: pointer;
+.back {
+	transform: rotateY(180deg);
+	background-color: red;	
 }
 
 .easy {
-
-    max-width: 400px;
-    height: 0px;
-    width:46%;
-    padding-top:23%;
-    padding-bottom:23%;
-    font-size: 4em;
+	padding-bottom: 30%;
+	width: 30%;
 }
 
 .normal {
-    max-width: 190px;
-    height: 0px;
-    width:22%;
-    padding-top:11%;
-    padding-bottom:11%;
-    font-size: 3em;
+	padding-bottom: 10%;
+	width: 10%;
 }
 
 .hard {
-	max-width: 125px;
-	height: 0px;
-	width: 14%;
-	padding-top: 7%;
-    padding-bottom: 7%;
-    font-size: 1.5em;
+	padding-bottom: 5%;
+	width: 5%;
 }
 
 .fas {
 	color: #fafafa;
 }
 
-.open {
-	background-color: blue;	
+.front-open {
+	transform: rotateY(-180deg);
+}
+
+.back-open {
+	transform: rotateX(0deg);
 }
 
 .correct {
 	background-color: green;
 	
 }
-
-span.clear { clear: left; display: block; }
