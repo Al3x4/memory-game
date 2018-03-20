@@ -100,16 +100,11 @@ function startGame() {
 
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card
-
 	if (e.target.firstChild.classList.contains('fas') 
-		//but not an icon inside an open card
+		//but not an open card
 		&& !e.target.firstChild.classList.contains('icon_open')
-		// but not an icon inside a card that is marked as correct 
-		&& !e.target.firstChild.classList.contains('icon_correct') 
-		//but not a card that is already open
-		&& !e.target.classList.contains('open')
-		//but not a card that is already marked as correct
-		&& !e.target.classList.contains('correct')){
+		// but not a card that is marked as correct 
+		&& !e.target.firstChild.classList.contains('icon_correct') ){ 
 		console.log(e.target);
 		clickCount += 1;
 		
@@ -129,7 +124,7 @@ function matchChecker(e){
 				//if it's a match, add the class 'correct' to keep the cards open
 				[].forEach.call(selectedCards, c =>{
 					c.classList.add('correct');
-					c.firstChild.classList.add('correct');
+					c.firstChild.classList.add('icon_correct');
 				});
 
 			} else {
@@ -142,7 +137,7 @@ function matchChecker(e){
 					c.firstChild.classList.remove('icon_open');
 
 					});
-				}, 1200);
+				}, 1000);
 					
 			}
 		}				
