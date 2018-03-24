@@ -4,7 +4,7 @@ const reset = document.getElementById('reset');
 const form = document.getElementById('form');
 const difficulties = document.querySelectorAll("input[name='difficulty']");
 let clickCount = 0;
-let clickedCards;
+let iconClasses;
 let selectedCards = [];
 let sec;
 let difficulty;
@@ -46,7 +46,7 @@ function checkDifficulty(){
 function populate(num) {
 
 	//clear previous clicks and memorised cards
-	clickedCards = [];
+	iconClasses = [];
 	clickCount = 0;
 
 	//clear the board
@@ -106,44 +106,49 @@ function startGame() {
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card
 	if (e.target.classList.contains('card')) { 
-		console.log(e.target);
+		//flip the card on click
 		e.target.classList.add('front-open');
 	    e.target.nextElementSibling.classList.add('back-open');
-	
-		clickedCards.push(e.target.nextElementSibling.firstChild.classList[2]);
+
+	    //keep track of the class of the icons in the clicked cards
+		iconClasses.push(e.target.nextElementSibling.firstChild.classList[2]);
+
 		selectedCards.push(e.target);
 
 		clickCount += 1;
-
+		
 		if (clickCount === 2) {
-			clickCount = 0;
+			clickCount = 0;			
 			
-			
-			if (clickedCards[0]===clickedCards[1]) {
+			if (iconClasses[0]===iconClasses[1]) {
 				console.log('match');
-				clickedCards = [];
+				iconClasses = [];
 				//if it's a match, add the class 'correct' to keep the cards open
 				[].forEach.call(selectedCards, c =>{
 					c.classList.add('correct');
-					c.firstChild.classList.add('icon_correct');
+					c.firstChild.classList.add('correct');
 				});
+
 
 			} else {
 				//if it's not a match, remove the class 'open' so the cards close again
 				//set timeout here so the player can see the cards before they flip(must refactor this 'cause weird errors)
 				console.log('not match');
 				setTimeout(function(){
-					clickedCards = [];
+					iconClasses = [];
 					[].forEach.call(selectedCards, c =>{
-					c.classList.remove('open');
-					c.firstChild.classList.remove('icon_open');
+					c.classList.remove('front-open');
+					c.nextElementSibling.classList.remove('back-open');
+					// c.firstChild.classList.remove('icon_open');
+					selectedCards = [];
 
 					});
 				}, 1000);
+				
 					
 			}
 		}				
-	}
+	} 
 }
 
 reset.addEventListener('click', startGame);
