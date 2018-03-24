@@ -116,37 +116,43 @@ function matchChecker(e){
 		selectedCards.push(e.target);
 
 		clickCount += 1;
-		
+
 		if (clickCount === 2) {
-			clickCount = 0;			
-			
+			clickCount = 0;
+			//remove the abvility to click extra cards for 1 second while the cards are checked
+			board.removeEventListener('click', matchChecker);
+			setTimeout(function(){
+			board.addEventListener('click', matchChecker)
+			}, 1000);
+
+
 			if (iconClasses[0]===iconClasses[1]) {
 				console.log('match');
+				//clear the icon classes array
 				iconClasses = [];
 				//if it's a match, add the class 'correct' to keep the cards open
 				[].forEach.call(selectedCards, c =>{
-					c.classList.add('correct');
-					c.firstChild.classList.add('correct');
+					console.log("this is c =>", c);
+					c.classList.add('front-correct');
+					c.nextElementSibling.classList.add('back-correct');
+					
 				});
-
-
 			} else {
 				//if it's not a match, remove the class 'open' so the cards close again
-				//set timeout here so the player can see the cards before they flip(must refactor this 'cause weird errors)
+				//wait 1 second before reflipping the crds so the player can see what they were
 				console.log('not match');
 				setTimeout(function(){
+					//clear the icon classes array
 					iconClasses = [];
 					[].forEach.call(selectedCards, c =>{
-					c.classList.remove('front-open');
-					c.nextElementSibling.classList.remove('back-open');
-					// c.firstChild.classList.remove('icon_open');
-					selectedCards = [];
-
-					});
+						c.classList.remove('front-open');
+						c.nextElementSibling.classList.remove('back-open');
+						// c.firstChild.classList.remove('icon_open');
+						selectedCards = [];
+					});	
 				}, 1000);
-				
-					
 			}
+
 		}				
 	} 
 }

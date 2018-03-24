@@ -75,7 +75,13 @@ body {
 	transform: rotateX(0deg);
 }
 
-.correct {
+.back-correct {
 	background-color: green;
+	transform: rotateX(0deg);
 	
+}
+
+.front-correct {
+	transform: rotateY(-180deg);
+	background-color: green;
 }
