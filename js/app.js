@@ -121,8 +121,10 @@ function matchChecker(e){
 			clickCount = 0;
 			//remove the abvility to click extra cards for 1 second while the cards are checked
 			board.removeEventListener('click', matchChecker);
+			console.log("no more clicks");
 			setTimeout(function(){
-			board.addEventListener('click', matchChecker)
+			board.addEventListener('click', matchChecker);
+			console.log("you can now click again");
 			}, 1000);
 
 
