@@ -88,3 +88,11 @@ body {
 	transform: rotateY(-180deg);
 	background-color: green;
 }
+
+.hide {
+	display: none;
+}
+
+.fa-star {
+	color: purple;
+}

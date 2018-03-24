@@ -8,11 +8,15 @@ let iconClasses;
 let selectedCards = [];
 let sec;
 let moves;
+let wrongMoves;
+let correctMoves;
 let difficulty;
 let difficultyClass;
 let setTimer;
+const ratingPerfect = document.getElementById('rating-perfect');
+const ratingAverage = document.getElementById('rating-average');
 
-const cardContainers = document.querySelectorAll(".card-container");
+const cardContainers = document.querySelectorAll('.card-container');
 
 //shuffle function from https://bost.ocks.org/mike/shuffle/
 function shuffle(array) {
@@ -29,16 +33,14 @@ function shuffle(array) {
 function checkDifficulty(){
 	[].forEach.call(difficulties, function(val){
 		
-		if (val.value === "easy" && val.checked === true) {
+		if (val.value === 'easy' && val.checked === true) {
 			difficulty = 4;
 			difficultyClass = 'easy';
-		} else if (val.value === "normal" && val.checked === true) {
+		} else if (val.value === 'normal' && val.checked === true) {
 			difficulty = 16;
-			console.log(difficulty);
 			difficultyClass = 'normal';
-		} else if (val.value === "hard" && val.checked === true) {
+		} else if (val.value === 'hard' && val.checked === true) {
 			difficulty = 36;
-			console.log(difficulty);
 			difficultyClass = 'hard';
 		}
 	});
@@ -51,7 +53,7 @@ function populate(num) {
 	clickCount = 0;
 
 	//clear the board
-	board.innerHTML = "";
+	board.innerHTML = '';
 
 	//LOGIC IS: shuffle the main array and slice half the number of cards
 	//this is to always get a random selection of icons
@@ -94,6 +96,60 @@ function timer(){
 	}
 }
 
+function rating(num) {
+	//star rating differs with difficulty. Allow as many wrong moves as card pairs, and then another 50% to next level. 
+	switch (difficultyClass) {
+		case 'easy' :
+			if (num === 2) {
+				ratingPerfect.classList.add('hide');
+			} else if (num === 3) {
+				ratingAverage.classList.add('hide');
+			};
+			break;
+		case 'normal' :
+			if (num === 8) {
+				ratingPerfect.classList.add('hide');
+			} else if (num === 12) {
+				ratingAverage.classList.add('hide');
+			};
+			break;
+		case 'hard' :
+			if (num === 18) {
+				ratingPerfect.classList.add('hide');
+			} else if (num === 27) {
+				ratingAverage.classList.add('hide');
+			};
+			break;
+	}
+};
+
+function checkwin(num) {
+	//easy won with 2 correct moves, normal with 8 and hard with 18
+	let won;
+	switch (difficultyClass) {
+		case 'easy' :
+			if (num === 2) {
+				won = true;	
+			};
+			break;
+		case 'normal' :
+			if (num === 8) {
+				won = true;	
+			};
+			break;
+		case 'hard' :
+			if (num === 18){
+				won = true;	
+			};
+			break;
+	};
+	if (won === true) {
+		setTimeout(function(){
+			alert("you won");
+		}, 1500);
+	}
+};
+
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card
 	if (e.target.classList.contains('card')) { 
@@ -112,7 +168,7 @@ function matchChecker(e){
 			//2 clicks make 1 move
 			moves +=1;
 			document.getElementById('moves').innerHTML = moves;
-
+			
 			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
 			board.removeEventListener('click', matchChecker);
 			setTimeout(function(){
@@ -121,6 +177,11 @@ function matchChecker(e){
 
 			if (iconClasses[0]===iconClasses[1]) {
 				console.log('match');
+				correctMoves += 1;
+				//check if game is won
+				if (checkwin(correctMoves)) {
+					alert('you won');
+				};
 				iconClasses = [];
 				//add the class 'correct' to keep the matched cards open
 				[].forEach.call(selectedCards, c =>{
@@ -129,7 +190,10 @@ function matchChecker(e){
 				});
 				selectedCards = [];
 			} else {
-				console.log('not match');
+				console.log('not match');		
+				//remove stars if too many wrong moves are made, how many depends on the difficulty
+				wrongMoves +=1;
+				rating(wrongMoves);
 				//wait 1 second before closing mismatching cards, so the player can see what they were
 				setTimeout(function(){
 					iconClasses = [];
@@ -143,18 +207,28 @@ function matchChecker(e){
 
 		}				
 	} 
-}
-
+};
 
 function startGame() {
 	checkDifficulty();
 	populate(difficulty);
+	
 	sec = 0;  //timer reset
+
+	//move counter reset
 	moves = 0;
 	document.getElementById('moves').innerHTML = '0';
+
+	//show all stars
+	wrongMoves = 0;
+	ratingPerfect.classList.remove('hide');
+	ratingAverage.classList.remove('hide');
+
+	correctMoves = 0;
+
 	clearInterval(setTimer);
 	setTimer = setInterval(timer, 1000);
-}
+};
 
 reset.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
