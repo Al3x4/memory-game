@@ -10,6 +10,7 @@ let sec;
 let moves;
 let difficulty;
 let difficultyClass;
+let setTimer;
 
 const cardContainers = document.querySelectorAll(".card-container");
 
@@ -144,12 +145,15 @@ function matchChecker(e){
 	} 
 }
 
+
 function startGame() {
 	checkDifficulty();
 	populate(difficulty);
 	sec = 0;  //timer reset
 	moves = 0;
-	setInterval(timer, 1000);
+	document.getElementById('moves').innerHTML = '0';
+	clearInterval(setTimer);
+	setTimer = setInterval(timer, 1000);
 }
 
 reset.addEventListener('click', startGame);
