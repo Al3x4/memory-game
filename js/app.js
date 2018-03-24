@@ -42,7 +42,6 @@ function checkDifficulty(){
 	});
 }
 
-//populate board with cards
 function populate(num) {
 
 	//clear previous clicks and memorised cards
@@ -57,7 +56,7 @@ function populate(num) {
 	shuffle(icons);
 	let boardIcons = icons.slice(0, num/2);
 	
-	//duplicate the array values to make pairs and shuflfe this new array
+	//duplicate the array values to make pairs and shuffle this new array
 	boardIcons = boardIcons.concat(boardIcons);
 	shuffle(boardIcons);
 	
@@ -79,11 +78,8 @@ function populate(num) {
 		fragment.appendChild(cardContainer);
 	}
 	board.appendChild(fragment); 
-
 }
 
-//timer functionality
-setInterval(timer, 1000);
 function timer(){
 	const timer = document.getElementById('timer');
 	sec+=1;
@@ -96,60 +92,46 @@ function timer(){
 	}
 }
 
-function startGame() {
-	checkDifficulty();
-	populate(difficulty);
-	sec = 0;  //timer reset
-}
-
-
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card
 	if (e.target.classList.contains('card')) { 
 		//flip the card on click
 		e.target.classList.add('front-open');
 	    e.target.nextElementSibling.classList.add('back-open');
-
 	    //keep track of the class of the icons in the clicked cards
 		iconClasses.push(e.target.nextElementSibling.firstChild.classList[2]);
-
+		//collect the clicked card elements
 		selectedCards.push(e.target);
 
 		clickCount += 1;
-
+		//allow only to clicks and then verify the match
 		if (clickCount === 2) {
 			clickCount = 0;
-			//remove the abvility to click extra cards for 1 second while the cards are checked
-			board.removeEventListener('click', matchChecker);
-			console.log("no more clicks");
-			setTimeout(function(){
-			board.addEventListener('click', matchChecker);
-			console.log("you can now click again");
-			}, 1000);
 
+			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
+			board.removeEventListener('click', matchChecker);
+			setTimeout(function(){
+				board.addEventListener('click', matchChecker);
+			}, 1000);
 
 			if (iconClasses[0]===iconClasses[1]) {
 				console.log('match');
-				//clear the icon classes array
 				iconClasses = [];
-				//if it's a match, add the class 'correct' to keep the cards open
+				//add the class 'correct' to keep the matched cards open
 				[].forEach.call(selectedCards, c =>{
-					console.log("this is c =>", c);
 					c.classList.add('front-correct');
-					c.nextElementSibling.classList.add('back-correct');
-					
+					c.nextElementSibling.classList.add('back-correct');	
 				});
+				selectedCards = [];
 			} else {
-				//if it's not a match, remove the class 'open' so the cards close again
-				//wait 1 second before reflipping the crds so the player can see what they were
 				console.log('not match');
+				//wait 1 second before closing mismatching cards, so the player can see what they were
 				setTimeout(function(){
 					//clear the icon classes array
 					iconClasses = [];
 					[].forEach.call(selectedCards, c =>{
 						c.classList.remove('front-open');
 						c.nextElementSibling.classList.remove('back-open');
-						// c.firstChild.classList.remove('icon_open');
 						selectedCards = [];
 					});	
 				}, 1000);
@@ -159,8 +141,15 @@ function matchChecker(e){
 	} 
 }
 
+function startGame() {
+	checkDifficulty();
+	populate(difficulty);
+	sec = 0;  //timer reset
+	setInterval(timer, 1000);
+}
+
 reset.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
 board.addEventListener('click', matchChecker);
 
-startGame();
+window.addEventListener('load', startGame);
