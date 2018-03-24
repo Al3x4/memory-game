@@ -105,11 +105,12 @@ function matchChecker(e){
 		selectedCards.push(e.target);
 
 		clickCount += 1;
-		//allow only to clicks and then verify the match
+		//allow only two clicks and then verify the match
 		if (clickCount === 2) {
 			clickCount = 0;
+			//2 clicks make 1 move
 			moves +=1;
-		document.getElementById('moves').innerHTML = moves;
+			document.getElementById('moves').innerHTML = moves;
 
 			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
 			board.removeEventListener('click', matchChecker);
@@ -130,7 +131,6 @@ function matchChecker(e){
 				console.log('not match');
 				//wait 1 second before closing mismatching cards, so the player can see what they were
 				setTimeout(function(){
-					//clear the icon classes array
 					iconClasses = [];
 					[].forEach.call(selectedCards, c =>{
 						c.classList.remove('front-open');
