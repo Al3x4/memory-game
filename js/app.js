@@ -7,6 +7,7 @@ let clickCount = 0;
 let iconClasses;
 let selectedCards = [];
 let sec;
+let moves;
 let difficulty;
 let difficultyClass;
 
@@ -107,6 +108,8 @@ function matchChecker(e){
 		//allow only to clicks and then verify the match
 		if (clickCount === 2) {
 			clickCount = 0;
+			moves +=1;
+		document.getElementById('moves').innerHTML = moves;
 
 			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
 			board.removeEventListener('click', matchChecker);
@@ -145,6 +148,7 @@ function startGame() {
 	checkDifficulty();
 	populate(difficulty);
 	sec = 0;  //timer reset
+	moves = 0;
 	setInterval(timer, 1000);
 }
 
