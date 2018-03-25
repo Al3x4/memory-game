@@ -151,8 +151,8 @@ function checkwin(num) {
 };
 
 function matchChecker(e){
-	//LOGIC IS: make sure the click target is a card
-	if (e.target.classList.contains('card')) { 
+	//LOGIC IS: make sure the click target is a card and prevent doubleclicking 
+	if (e.target.classList.contains('card') && !e.target.classList.contains('front-open')) { 
 		//flip the card on click
 		e.target.classList.add('front-open');
 	    e.target.nextElementSibling.classList.add('back-open');
@@ -188,7 +188,7 @@ function matchChecker(e){
 					c.classList.add('front-correct');
 					c.nextElementSibling.classList.add('back-correct');	
 				});
-				selectedCards = [];
+				//selectedCards = [];
 			} else {
 				console.log('not match');		
 				//remove stars if too many wrong moves are made, how many depends on the difficulty
