@@ -17,6 +17,8 @@ const ratingPerfect = document.getElementById('rating-perfect');
 const ratingAverage = document.getElementById('rating-average');
 
 const cardContainers = document.querySelectorAll('.card-container');
+const modal = document.querySelector('.modal');
+
 
 //shuffle function from https://bost.ocks.org/mike/shuffle/
 function shuffle(array) {
@@ -144,9 +146,13 @@ function checkwin(num) {
 			break;
 	};
 	if (won === true) {
+		//wait 1 sec for the cards to flip right side up
 		setTimeout(function(){
-			alert("you won");
-		}, 1500);
+			//create modal
+
+			modal.firstChild.innerHTML = "<h2>Cograts, you made it</h2>";
+			modal.classList.remove('hide');
+		}, 1000);
 	}
 };
 
@@ -179,9 +185,8 @@ function matchChecker(e){
 				console.log('match');
 				correctMoves += 1;
 				//check if game is won
-				if (checkwin(correctMoves)) {
-					alert('you won');
-				};
+				checkwin(correctMoves);
+
 				iconClasses = [];
 				//add the class 'correct' to keep the matched cards open
 				[].forEach.call(selectedCards, c =>{
@@ -233,5 +238,11 @@ function startGame() {
 reset.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
 board.addEventListener('click', matchChecker);
+window.addEventListener('click', function(e){
+	if (e.target === modal) {
+		modal.classList.add('hide');
+		startGame();
+	}
+});
 
 window.addEventListener('load', startGame);
