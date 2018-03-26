@@ -33,17 +33,21 @@ function shuffle(array) {
 
 // go over the radio buttons and check the difficulty selection
 function checkDifficulty(){
-	[].forEach.call(difficulties, function(val){
-		
-		if (val.value === 'easy' && val.checked === true) {
+	[].forEach.call(difficulties, function(input){
+		input.nextElementSibling.classList.remove('checked');
+		console.log(input.nextElementSibling)
+		if (input.value === 'easy' && input.checked === true) {
 			difficulty = 4;
 			difficultyClass = 'easy';
-		} else if (val.value === 'normal' && val.checked === true) {
+			input.nextElementSibling.classList.add('checked');
+		} else if (input.value === 'normal' && input.checked === true) {
 			difficulty = 16;
 			difficultyClass = 'normal';
-		} else if (val.value === 'hard' && val.checked === true) {
+			input.nextElementSibling.classList.add('checked');
+		} else if (input.value === 'hard' && input.checked === true) {
 			difficulty = 36;
 			difficultyClass = 'hard';
+			input.nextElementSibling.classList.add('checked');
 		}
 	});
 }
@@ -150,7 +154,6 @@ function checkwin(num) {
 		setTimeout(function(){
 			//create modal
 
-			modal.firstChild.innerHTML = "<h2>Cograts, you made it</h2>";
 			modal.classList.remove('hide');
 		}, 1000);
 	}
