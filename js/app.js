@@ -141,6 +141,7 @@ function checkwin(num) {
 			document.getElementById('final-moves').innerText = moves;
 			document.getElementById('final-rating').innerHTML = document.getElementById('stars').innerHTML;
 			modal.classList.remove('hide');
+			clearInterval(setTimer);
 		}, 1000);
 	}
 }
@@ -203,15 +204,20 @@ function startGame() {
 	moves = 0;
 	wrongMoves = 0;
 	correctMoves = 0;
+	timer.innerText = '0';
 	document.getElementById('moves').innerHTML = '0';
 	modal.classList.add('hide');
 	ratingPerfect.classList.remove('hide');
 	ratingAverage.classList.remove('hide');
 	clearInterval(setTimer);
-	setTimer = setInterval(stopwatch, 1000);
 	//restart game logic
 	checkDifficulty();
 	populate(difficulty);
+	//start the timer on first click
+	board.addEventListener('click', function clickOnce(){
+		setTimer = setInterval(stopwatch, 1000);
+		board.removeEventListener('click', clickOnce)
+	});
 }
 
 reset.addEventListener('click', startGame);
