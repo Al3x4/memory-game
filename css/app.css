@@ -15,6 +15,82 @@ body {
 	font-family: sans-serif;
 }
 
+h1 {
+	font-family: 'Chicle', cursive;
+	font-size: 5rem;
+	text-align: center;
+	color: #61045F;
+}
+
+/*Styles for the dashboard*/
+
+.dashboard {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+	flex-wrap: wrap;
+	color: #545454;
+	font-size: 1.2rem;
+}
+
+.dashboard-element {
+	width: 20%;
+	min-width: 100px;
+	text-align: center;
+}
+
+.dashboard-icon {
+	font-size: 1.5rem;
+	line-height: 2rem;
+}
+
+#timer, 
+#moves {
+	display: inline-block;
+	line-height: 2rem;
+	width: 5%;
+}
+
+.stars {
+	margin: 0 auto;
+	text-align: center;
+	margin: 3% auto 2%;
+}
+
+/*Styles for the difficulty select buttons*/
+
+#form {
+	display: flex;
+	justify-content: space-between;
+}
+
+input {
+	display: none;
+}
+
+label {
+	flex: 1;
+	display: inline-block;
+	cursor: pointer;
+	text-align: center;
+	line-height: 50px;
+	margin: 0;
+	padding: 0;
+	background:  #61045F;
+	color: #fff;
+	box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.7);;
+}
+
+label:nth-of-type(2) {
+	margin: 0 1%;
+}
+
+.checked {
+	box-shadow: none;
+}
+
+
+/*Styles for the game board*/
 .container {
 	margin: 0 auto;
 	width: 100%;
@@ -128,34 +204,3 @@ body {
 	display: none;
 }
 
-/*Styles for the difficulty select buttons*/
-
-#form {
-	display: flex;
-	justify-content: space-between;
-}
-
-input {
-	display: none;
-}
-
-label {
-	flex: 1;
-	display: inline-block;
-	cursor: pointer;
-	text-align: center;
-	line-height: 50px;
-	margin: 0;
-	padding: 0;
-	background:  #61045F;
-	color: #fff;
-	box-shadow: inset 0 -7px 9px -7px rgba(0,0,0,0.7);;
-}
-
-label:nth-of-type(2) {
-	margin: 0 1%;
-}
-
-.checked {
-	box-shadow: none;
-}

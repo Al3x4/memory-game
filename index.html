@@ -7,20 +7,26 @@
 	<title>Memory Game</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
 	<div class="container">
-		<h1>MemorY</h1>
-		<p>Elapsed time: <span id="timer"></span></p>
-		<p>Moves: <span id="moves"></span></p>
-		<div class="star-rating">
+		<h1>Match maker</h1>
+		<div class = "dashboard">
+			<div class="dashboard-element">
+				<i class=" dashboard-icon fas fa-stopwatch"></i> <span id="timer"></span>
+			</div>
+			<div class="dashboard-element">
+				<i class=" dashboard-icon fas fa-clone"></i> <span id="moves"></span>
+			</div>
+		</div>
+		<div class="stars">
 			<i class="fas fa-star" id="rating-poor"></i>
 			<i class="fas fa-star" id="rating-average"></i>
 			<i class="fas fa-star" id="rating-perfect"></i>
 		</div>
-
-		<button id = "reset">Reset</button>
+		
 		<div id="form">
 			<input type="radio" id="easyMode"
 			name="difficulty" value="easy">
@@ -35,8 +41,8 @@
 			<label for="hardMode">Hard</label>
 		</div>
 		<div class="game-board">
-
 		</div>
+		<i id = "reset" class="fas fa-redo-alt"></i>
 	</div>
 	<div class="modal hide">
 		<div class="modal-inner">
