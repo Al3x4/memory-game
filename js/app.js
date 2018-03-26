@@ -111,7 +111,7 @@ function rating(num) {
 			};
 			break;
 	}
-};
+}
 
 function checkwin(num) {
 	//easy won with 2 correct moves, normal with 8 and hard with 18
@@ -143,7 +143,7 @@ function checkwin(num) {
 			modal.classList.remove('hide');
 		}, 1000);
 	}
-};
+}
 
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card and prevent doubleclicking 
@@ -195,7 +195,7 @@ function matchChecker(e){
 			}
 		}
 	}
-};
+}
 
 function startGame() {
 	//cleanup board and reset everything
@@ -212,7 +212,7 @@ function startGame() {
 	//restart game logic
 	checkDifficulty();
 	populate(difficulty);
-};
+}
 
 reset.addEventListener('click', startGame);
 replay.addEventListener('click', startGame);
