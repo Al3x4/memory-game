@@ -1,8 +1,10 @@
 const icons = ['ambulance', 'anchor', 'balance-scale', 'basketball-ball', 'bath', 'bed', 'beer', 'bicycle', 'binoculars', 'bomb', 'bug', 'car', 'chess-rook', 'chess-queen', 'cloud', 'fighter-jet', 'fire', 'gamepad', 'home', 'sun', 'volleyball-ball', 'chess-knight'];
 const board = document.querySelector('.game-board');
 const reset = document.getElementById('reset');
+const replay = document.getElementById('replay');
 const form = document.getElementById('form');
 const difficulties = document.querySelectorAll("input[name='difficulty']");
+const timer = document.getElementById('timer');
 let clickCount = 0;
 let iconClasses;
 let selectedCards = [];
@@ -13,9 +15,9 @@ let correctMoves;
 let difficulty;
 let difficultyClass;
 let setTimer;
+
 const ratingPerfect = document.getElementById('rating-perfect');
 const ratingAverage = document.getElementById('rating-average');
-
 const cardContainers = document.querySelectorAll('.card-container');
 const modal = document.querySelector('.modal');
 
@@ -90,8 +92,7 @@ function populate(num) {
 	board.appendChild(fragment); 
 }
 
-function timer(){
-	const timer = document.getElementById('timer');
+function stopwatch(){
 	sec+=1;
 	if (sec<60) {
 		timer.innerText = sec;
@@ -153,7 +154,9 @@ function checkwin(num) {
 		//wait 1 sec for the cards to flip right side up
 		setTimeout(function(){
 			//create modal
-
+			document.getElementById('final-time').innerText = timer.innerText;
+			document.getElementById('final-moves').innerText = moves;
+			document.getElementById('final-rating').innerHTML = document.getElementById('stars').innerHTML;
 			modal.classList.remove('hide');
 		}, 1000);
 	}
@@ -218,6 +221,7 @@ function matchChecker(e){
 };
 
 function startGame() {
+	modal.classList.add('hide');
 	checkDifficulty();
 	populate(difficulty);
 	
@@ -235,15 +239,16 @@ function startGame() {
 	correctMoves = 0;
 
 	clearInterval(setTimer);
-	setTimer = setInterval(timer, 1000);
+	setTimer = setInterval(stopwatch, 1000);
 };
 
 reset.addEventListener('click', startGame);
+replay.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
 board.addEventListener('click', matchChecker);
+
 window.addEventListener('click', function(e){
 	if (e.target === modal) {
-		modal.classList.add('hide');
 		startGame();
 	}
 });

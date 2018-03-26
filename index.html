@@ -21,21 +21,18 @@
 				<i class=" dashboard-icon fas fa-clone"></i> <span id="moves"></span>
 			</div>
 		</div>
-		<div class="stars">
+		<div id="stars">
 			<i class="fas fa-star" id="rating-poor"></i>
 			<i class="fas fa-star" id="rating-average"></i>
 			<i class="fas fa-star" id="rating-perfect"></i>
-		</div>
-		
+		</div>	
 		<div id="form">
 			<input type="radio" id="easyMode"
 			name="difficulty" value="easy">
 			<label for="easyMode">Easy</label>
-
 			<input type="radio" id="normalMode"
 			name="difficulty" value="normal" checked="checked">
 			<label class="checked" for="normalMode">Normal</label>
-
 			<input type="radio" id="hardMode"
 			name="difficulty" value="hard">
 			<label for="hardMode">Hard</label>
@@ -44,12 +41,12 @@
 		</div>
 		<i id = "reset" class="fas fa-redo-alt"></i>
 	</div>
-	<div class="modal hide">
+	<div class="modal">
 		<div class="modal-inner">
-			<h3>
-				Well done!
-			</h3>
-			<p>You solved it in <span></span></p>
+			<h3>Well done!</h3>
+			<p class="modal-text">You solved it in <span id="final-time"></span> seconds with <span id="final-moves"></span> moves</p>
+			<p class="modal-text" id="final-rating"></p>
+			<p class="modal-text" id="replay"> <i class="fas fa-redo-alt"></i> Play again?</p>
 		</div>
 	</div>
 	<script type="text/javascript" src="js/app.js"></script>
