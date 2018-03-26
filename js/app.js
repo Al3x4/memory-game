@@ -141,6 +141,7 @@ function checkwin(num) {
 			document.getElementById('final-moves').innerText = moves;
 			document.getElementById('final-rating').innerHTML = document.getElementById('stars').innerHTML;
 			modal.classList.remove('hide');
+			//stop the stopwatch
 			clearInterval(setTimer);
 		}, 1000);
 	}
@@ -215,6 +216,7 @@ function startGame() {
 	populate(difficulty);
 	//start the timer on first click
 	board.addEventListener('click', function clickOnce(){
+		clearInterval(setTimer);
 		setTimer = setInterval(stopwatch, 1000);
 		board.removeEventListener('click', clickOnce)
 	});
