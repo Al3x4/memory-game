@@ -5,32 +5,23 @@ const replay = document.getElementById('replay');
 const form = document.getElementById('form');
 const difficulties = document.querySelectorAll("input[name='difficulty']");
 const timer = document.getElementById('timer');
-let clickCount = 0;
-let iconClasses;
-let selectedCards = [];
-let sec;
-let moves;
-let wrongMoves;
-let correctMoves;
-let difficulty;
-let difficultyClass;
-let setTimer;
-
 const ratingPerfect = document.getElementById('rating-perfect');
 const ratingAverage = document.getElementById('rating-average');
 const cardContainers = document.querySelectorAll('.card-container');
 const modal = document.querySelector('.modal');
-
+let clickCount = 0;
+let selectedCards = [];
+let iconClasses, sec, moves, wrongMoves, correctMoves, difficulty, difficultyClass, setTimer;
 
 //shuffle function from https://bost.ocks.org/mike/shuffle/
 function shuffle(array) {
-  var m = array.length, t, i;
-  while (m) {
-    i = Math.floor(Math.random() * m--);
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
-  }
+	var m = array.length, t, i;
+	while (m) {
+		i = Math.floor(Math.random() * m--);
+		t = array[m];
+		array[m] = array[i];
+		array[i] = t;
+	}
 }
 
 // go over the radio buttons and check the difficulty selection
@@ -55,41 +46,33 @@ function checkDifficulty(){
 }
 
 function populate(num) {
-
-	//clear previous clicks and memorised cards
 	iconClasses = [];
 	clickCount = 0;
-
-	//clear the board
 	board.innerHTML = '';
-
 	//LOGIC IS: shuffle the main array and slice half the number of cards
 	//this is to always get a random selection of icons
 	shuffle(icons);
 	let boardIcons = icons.slice(0, num/2);
-	
 	//duplicate the array values to make pairs and shuffle this new array
 	boardIcons = boardIcons.concat(boardIcons);
 	shuffle(boardIcons);
-	
 	//actually populate HTML
-	const fragment = document.createDocumentFragment(); 
-
+	const fragment = document.createDocumentFragment();
 	for (let x = 0; x < num; x++) {
 		const cardContainer = document.createElement('div');
 		cardContainer.classList.add('card-container', difficultyClass);
-    	const front = document.createElement('div');
-    	const back = document.createElement('div');
-    	front.classList.add('card', 'front');
-    	back.classList.add('card', 'back');
-    	const icon = document.createElement('i');
-    	icon.classList.add('icon','fas', 'fa-' + boardIcons[x]);
-    	back.appendChild(icon);
-    	cardContainer.appendChild(front);
-    	cardContainer.appendChild(back);
+		const front = document.createElement('div');
+		const back = document.createElement('div');
+		front.classList.add('card', 'front');
+		back.classList.add('card', 'back');
+		const icon = document.createElement('i');
+		icon.classList.add('icon','fas', 'fa-' + boardIcons[x]);
+		back.appendChild(icon);
+		cardContainer.appendChild(front);
+		cardContainer.appendChild(back);
 		fragment.appendChild(cardContainer);
 	}
-	board.appendChild(fragment); 
+	board.appendChild(fragment);
 }
 
 function stopwatch(){
@@ -136,7 +119,7 @@ function checkwin(num) {
 	switch (difficultyClass) {
 		case 'easy' :
 			if (num === 2) {
-				won = true;	
+				won = true;
 			};
 			break;
 		case 'normal' :
@@ -146,14 +129,14 @@ function checkwin(num) {
 			break;
 		case 'hard' :
 			if (num === 18){
-				won = true;	
+				won = true;
 			};
 			break;
 	};
 	if (won === true) {
 		//wait 1 sec for the cards to flip right side up
 		setTimeout(function(){
-			//create modal
+			//fill in and display modal
 			document.getElementById('final-time').innerText = timer.innerText;
 			document.getElementById('final-moves').innerText = moves;
 			document.getElementById('final-rating').innerHTML = document.getElementById('stars').innerHTML;
@@ -164,15 +147,14 @@ function checkwin(num) {
 
 function matchChecker(e){
 	//LOGIC IS: make sure the click target is a card and prevent doubleclicking 
-	if (e.target.classList.contains('card') && !e.target.classList.contains('front-open')) { 
+	if (e.target.classList.contains('card') && !e.target.classList.contains('front-open')) {
 		//flip the card on click
 		e.target.classList.add('front-open');
-	    e.target.nextElementSibling.classList.add('back-open');
-	    //keep track of the class of the icons in the clicked cards
+		e.target.nextElementSibling.classList.add('back-open');
+		//keep track of the class of the icons in the clicked cards
 		iconClasses.push(e.target.nextElementSibling.firstChild.classList[2]);
 		//collect the clicked card elements
 		selectedCards.push(e.target);
-
 		clickCount += 1;
 		//allow only two clicks and then verify the match
 		if (clickCount === 2) {
@@ -180,28 +162,24 @@ function matchChecker(e){
 			//2 clicks make 1 move
 			moves +=1;
 			document.getElementById('moves').innerHTML = moves;
-			
 			//remove the ability to click extra cards for 1 second while the 2 already clicked cards are checked
 			board.removeEventListener('click', matchChecker);
 			setTimeout(function(){
 				board.addEventListener('click', matchChecker);
 			}, 1000);
-
 			if (iconClasses[0]===iconClasses[1]) {
 				console.log('match');
 				correctMoves += 1;
 				//check if game is won
 				checkwin(correctMoves);
-
 				iconClasses = [];
 				//add the class 'correct' to keep the matched cards open
 				[].forEach.call(selectedCards, c =>{
 					c.classList.add('front-correct');
 					c.nextElementSibling.classList.add('back-correct');	
 				});
-				//selectedCards = [];
 			} else {
-				console.log('not match');		
+				console.log('not match');
 				//remove stars if too many wrong moves are made, how many depends on the difficulty
 				wrongMoves +=1;
 				rating(wrongMoves);
@@ -212,45 +190,37 @@ function matchChecker(e){
 						c.classList.remove('front-open');
 						c.nextElementSibling.classList.remove('back-open');
 						selectedCards = [];
-					});	
+					});
 				}, 1000);
 			}
-
-		}				
-	} 
+		}
+	}
 };
 
 function startGame() {
-	modal.classList.add('hide');
-	checkDifficulty();
-	populate(difficulty);
-	
-	sec = 0;  //timer reset
-
-	//move counter reset
+	//cleanup board and reset everything
+	sec = 0; 
 	moves = 0;
-	document.getElementById('moves').innerHTML = '0';
-
-	//show all stars
 	wrongMoves = 0;
+	correctMoves = 0;
+	document.getElementById('moves').innerHTML = '0';
+	modal.classList.add('hide');
 	ratingPerfect.classList.remove('hide');
 	ratingAverage.classList.remove('hide');
-
-	correctMoves = 0;
-
 	clearInterval(setTimer);
 	setTimer = setInterval(stopwatch, 1000);
+	//restart game logic
+	checkDifficulty();
+	populate(difficulty);
 };
 
 reset.addEventListener('click', startGame);
 replay.addEventListener('click', startGame);
 form.addEventListener('change', startGame);
-board.addEventListener('click', matchChecker);
-
 window.addEventListener('click', function(e){
 	if (e.target === modal) {
 		startGame();
 	}
 });
-
+board.addEventListener('click', matchChecker);
 window.addEventListener('load', startGame);
