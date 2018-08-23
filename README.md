@@ -17,3 +17,4 @@ This is a Memory game with HTML, CSS and JS.
 The number of cards on screen chages with difficulty.
 The cards are always different because the icons are pulled form an array of 22 class names.
 
+![Screenshot Crop](https://github.com/Al3x4/memory-game/blob/master/img/Screenshot_2018-08-23%20Memory%20Game.png)
